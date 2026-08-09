@@ -6,6 +6,7 @@ const startButton = document.getElementById('start-button');
 
 const game = new Game(canvas);
 game.renderTitleBackdrop();
+window.game = game; // console/debug access
 
 startButton.addEventListener('click', () => {
   titleScreen.classList.add('hidden');

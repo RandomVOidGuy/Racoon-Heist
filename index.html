@@ -70,6 +70,8 @@
       position: fixed; top: 0; left: 0; right: 0;
       display: none;
       justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
       padding: 0.8rem 1rem;
       color: #f5ecd7;
       font-size: 1rem;
@@ -78,6 +80,64 @@
       z-index: 5;
     }
     body.playing #hud { display: flex; }
+
+    #alert-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 0 0 auto;
+    }
+    #alert-bar {
+      width: 6rem; height: 0.6rem;
+      border-radius: 999px;
+      background: rgba(245, 236, 215, 0.15);
+      overflow: hidden;
+    }
+    #alert-fill {
+      width: 0%; height: 100%;
+      background: linear-gradient(90deg, #ffd65a, #ff4444);
+      transition: width 0.1s linear;
+    }
+
+    /* Danger vignette when a camera is spotting you */
+    #vignette {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 18vmin 4vmin rgba(255, 40, 40, 0.55);
+      opacity: 0;
+      z-index: 4;
+    }
+
+    /* End screens (busted / escaped) */
+    #end-screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.2rem;
+      background: rgba(11, 16, 38, 0.85);
+      color: #f5ecd7;
+      text-align: center;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #end-screen.show { opacity: 1; pointer-events: auto; }
+    #end-screen h1 { font-size: clamp(2rem, 8vw, 3.8rem); letter-spacing: 0.04em; }
+    #end-screen p { max-width: 26rem; padding: 0 1.5rem; line-height: 1.5; color: #c9c2ae; }
+    #end-screen .big { font-size: clamp(2.5rem, 10vw, 4rem); }
+    #restart-button {
+      padding: 0.9rem 2.6rem;
+      font-size: 1.15rem;
+      font-family: inherit;
+      color: #0b1026;
+      background: #ffd65a;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #b8912a;
+    }
+    #restart-button:active { transform: translateY(4px); box-shadow: 0 2px 0 #b8912a; }
 
     /* Touch joystick */
     #joystick {
@@ -112,8 +172,21 @@
   </div>
 
   <div id="hud">
-    <span id="hud-objective">Objective: case the joint</span>
+    <span id="hud-objective">Steal the Golden Sardine</span>
+    <div id="alert-wrap">
+      <span>👁</span>
+      <div id="alert-bar"><div id="alert-fill"></div></div>
+    </div>
     <span id="hud-loot">🐟 0</span>
+  </div>
+
+  <div id="vignette"></div>
+
+  <div id="end-screen">
+    <div class="big" id="end-emoji">🚨</div>
+    <h1 id="end-title">BUSTED!</h1>
+    <p id="end-text"></p>
+    <button id="restart-button" type="button">Try Again</button>
   </div>
 
   <div id="joystick"><div class="nub"></div></div>
